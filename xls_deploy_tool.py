@@ -194,7 +194,7 @@ class SheetInterpreter:
         # 将PB转换成py格式
         try :
             command = "protoc --python_out=./ " + "proto/" + self._pb_file_name
-            print "command %s !"%command
+            #print "command %s !"%command
             os.system(command)
         except BaseException, e :
             print "protoc failed!"
@@ -660,7 +660,6 @@ class DataParser:
         file.close()
 
 
-
 if __name__ == '__main__' :
     """入口"""
     if len(sys.argv) < 3 :
@@ -688,7 +687,7 @@ if __name__ == '__main__' :
             print e
             sys.exit(-3)
 
-        print "Interpreter Success!!!"
+        #print "Interpreter Success!!!"
 
     if op == 0 or op == 2:
         try :
@@ -699,5 +698,25 @@ if __name__ == '__main__' :
             print e
             sys.exit(-4)
 
-        print "Parse Success!!!"
+        #print "Parse Success!!!"
 
+def _Convert(xls_file_path,sheet_name) :
+        try :
+            tool = SheetInterpreter(xls_file_path, sheet_name)
+            tool.Interpreter()
+        except BaseException, e :
+            print "Interpreter Failed!!!"
+            print e
+            sys.exit(-3)
+
+        #print "Interpreter Success!!!"
+
+        try :
+            parser = DataParser(xls_file_path, sheet_name)
+            parser.Parse()
+        except BaseException, e :
+            print "Parse Failed!!!"
+            print e
+            sys.exit(-4)
+
+        #print "Parse Success!!!"
