@@ -97,7 +97,7 @@ class LogHelp :
         import logging
 
         LogHelp._logger = logging.getLogger()
-        logfile = 'tnt_comm_deploy_tool.log'
+        logfile = 'game_comm_deploy_tool.log'
         hdlr = logging.FileHandler(logfile)
         formatter = logging.Formatter('%(asctime)s|%(levelname)s|%(lineno)d|%(funcName)s|%(message)s')
         hdlr.setFormatter(formatter)
@@ -166,7 +166,7 @@ class SheetInterpreter:
         # 保存所有结构的名字
         self._struct_name_list = []
 
-        self._pb_file_name = "tnt_deploy_" + sheet_name.lower() + ".proto"
+        self._pb_file_name = "game_deploy_" + sheet_name.lower() + ".proto"
 
 
     def Interpreter(self) :
@@ -175,7 +175,7 @@ class SheetInterpreter:
 
         self._LayoutFileHeader()
 
-        self._output.append("package tnt_deploy;\n")
+        self._output.append("package game_deploy;\n")
 
         self._LayoutStructHead(self._sheet_name)
         self._IncreaseIndentation()
@@ -309,7 +309,6 @@ class SheetInterpreter:
         """生成PB文件的描述信息"""
         self._output.append("/**\n")
         self._output.append("* @file:   " + self._pb_file_name + "\n")
-        self._output.append("* @author: jameyli <jameyli AT tencent DOT com>\n")
         self._output.append("* @brief:  这个文件是通过工具自动生成的，建议不要手动修改\n")
         self._output.append("*/\n")
         self._output.append("\n")
@@ -426,7 +425,7 @@ class DataParser:
         self._col = 0
 
         try:
-            self._module_name = "tnt_deploy_" + self._sheet_name.lower() + "_pb2"
+            self._module_name = "game_deploy_" + self._sheet_name.lower() + "_pb2"
             sys.path.append(os.getcwd()+"/proto")
             exec('from '+ self._module_name + ' import *');
             self._module = sys.modules[self._module_name]
@@ -648,13 +647,13 @@ class DataParser:
             raise
 
     def _WriteData2File(self, data) :
-        file_name = "tnt_deploy_" + self._sheet_name.lower() + ".data"
+        file_name = "game_deploy_" + self._sheet_name.lower() + ".data"
         file = open("bin/" + file_name, 'wb+')
         file.write(data)
         file.close()
 
     def _WriteReadableData2File(self, data) :
-        file_name = "tnt_deploy_" + self._sheet_name.lower() + ".txt"
+        file_name = "game_deploy_" + self._sheet_name.lower() + ".txt"
         file = open("txt/"+file_name, 'wb+')
         file.write(data)
         file.close()
